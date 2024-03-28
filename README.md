@@ -16,6 +16,49 @@ To deploy an example HDFS cluster, run:
   docker-compose up -d
 ```
 
+Run namenode terminal
+```
+  docker exec -it namenode bash
+```
+
+First command on namenode
+
+```
+  hdfs dfs -ls /
+```
+
+result must be 
+
+drwxr-xr-x   - root supergroup          0 2024-03-28 15:35 /rmstate
+
+
+Create Dir
+
+```
+  hdfs dfs -mkdir /foo
+```
+
+Create a file in local
+
+```
+  echo "Hello world!" > Hello
+```
+
+Put file in dfs
+
+```
+  hdfs dfs -put Hello /foo
+```
+
+Retrieve file from dfs
+
+```
+  hdfs dfs -cat /foo/Hello
+```
+
+
+
+
 Run example wordcount job:
 ```
   make wordcount
