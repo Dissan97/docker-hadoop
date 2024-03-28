@@ -13,7 +13,7 @@ See repository branches for supported hadoop versions
 
 To deploy an example HDFS cluster, run:
 ```
-  docker-compose up
+  docker-compose up -d
 ```
 
 Run example wordcount job:
@@ -61,3 +61,34 @@ The available configurations are:
 * /etc/hadoop/mapred-site.xml  MAPRED_CONF
 
 If you need to extend some other configuration file, refer to base/entrypoint.sh bash script.
+
+# UPDATE REPLICAS IN NAMENODE SERVER
+
+### update this property dfs.replication
+### name value #ofReplicas
+
+```
+echo "<configuration>
+    <property><name>dfs.namenode.datanode.registration.ip-hostname-check</name><value>false</value></property>
+    <property><name>dfs.webhdfs.enabled</name><value>true</value></property>
+    <property><name>dfs.permissions.enabled</name><value>false</value></property>
+    <property><name>dfs.namenode.name.dir</name><value>file:///hadoop/dfs/name</value></property>
+    <property><name>dfs.namenode.rpc-bind-host</name><value>0.0.0.0</value></property>
+    <property><name>dfs.namenode.servicerpc-bind-host</name><value>0.0.0.0</value></property>
+    <property><name>dfs.namenode.http-bind-host</name><value>0.0.0.0</value></property>
+    <property><name>dfs.namenode.https-bind-host</name><value>0.0.0.0</value></property>
+    <property><name>dfs.client.use.datanode.hostname</name><value>true</value></property>
+    <property><name>dfs.datanode.use.datanode.hostname</name><value>true</value></property>
+    <property><name>dfs.namenode.datanode.registration.ip-hostname-check</name><value>false</value></property>
+    <property><name>dfs.webhdfs.enabled</name><value>true</value></property>
+    <property><name>dfs.permissions.enabled</name><value>false</value></property>
+    <property><name>dfs.namenode.name.dir</name><value>file:///hadoop/dfs/name</value></property>
+    <property><name>dfs.namenode.rpc-bind-host</name><value>0.0.0.0</value></property>
+    <property><name>dfs.namenode.servicerpc-bind-host</name><value>0.0.0.0</value></property>
+    <property><name>dfs.namenode.http-bind-host</name><value>0.0.0.0</value></property>
+    <property><name>dfs.namenode.https-bind-host</name><value>0.0.0.0</value></property>
+    <property><name>dfs.client.use.datanode.hostname</name><value>true</value></property>
+    <property><name>dfs.datanode.use.datanode.hostname</name><value>true</value></property>
+    <property><name>dfs.replication</name><value>5</value></property>
+</configuration>" > $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+```
